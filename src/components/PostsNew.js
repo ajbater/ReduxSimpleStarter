@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+
+import { createPost } from "../actions";
 
 class PostsNew extends Component {
   renderField(field) {
@@ -20,7 +23,9 @@ class PostsNew extends Component {
   }
 
   onSubmit(values) {
-    console.log(values);
+    this.props.createPost(values, () => {
+      this.props.history.push("/");
+    });
   }
 
   render() {
@@ -34,8 +39,8 @@ class PostsNew extends Component {
           component={this.renderField}
         />
         <Field
-          name="tags"
-          label="Tags"
+          name="categories"
+          label="Categories"
           component={this.renderField}
         />
         <Field
@@ -55,8 +60,8 @@ function validate(values) {
   if (!values.title) {
     errors.title = "Please enter a title";
   }
-  if (!values.tags) {
-    errors.tags = "Please add some tags";
+  if (!values.categories) {
+    errors.categories = "Please add some categories";
   }
   if (!values.content) {
     errors.content = "Please add some content to the post";
@@ -67,4 +72,6 @@ function validate(values) {
 export default reduxForm({
   validate,
   form: "PostsNewForm"
-})(PostsNew);
+})(
+  connect(null, { createPost })(PostsNew)
+);
