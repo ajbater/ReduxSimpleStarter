@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 
-import { fetchPost } from "../actions";
+import { fetchPost, deletePost } from "../actions";
 
 import PostsShow from "../components/PostsShow";
 
@@ -10,4 +10,4 @@ const mapStateToProps = ({ posts }, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps, { fetchPost })(PostsShow);
+export default connect(mapStateToProps, { fetchPost, deletePost })(PostsShow);
